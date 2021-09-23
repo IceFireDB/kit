@@ -236,7 +236,6 @@ func (s *Store) UpdateSlotWithoutAction(m *Slot) error {
 }
 
 func (s *Store) UpdateSlot(m *Slot) error {
-
 	switch m.State.Status {
 	case SLOT_STATUS_MIGRATE, SLOT_STATUS_OFFLINE,
 		SLOT_STATUS_ONLINE, SLOT_STATUS_PRE_MIGRATE:
@@ -421,13 +420,8 @@ func (s *Store) SetSlotRange(productName string, fromSlot, toSlot, groupId int, 
 // todo only need sg id
 func (s *Store) GetServers(sg *ServerGroup) ([]Server, error) {
 	var ret []Server
-	root := s.GroupPath(sg.Id)
-	nodes, err := s.client.List(root, true)
-	if err != nil {
-		return nil, errors.Trace(err)
-	}
-	for _, nodePath := range nodes {
-		s, err := s.GetServerByPath(nodePath, true)
+	for _, server := range sg.Servers {
+		s, err := s.GetServer(server.Addr, true)
 		if err != nil {
 			return nil, errors.Trace(err)
 		}
