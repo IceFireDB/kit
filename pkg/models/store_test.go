@@ -2,16 +2,18 @@ package models
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
+	"strings"
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 const productName = "productNameForTest"
 
 func getStore() *Store {
-	//client, err := NewClient("etcd", "localhost:2379", "", time.Second*5)
+	// client, err := NewClient("etcd", "localhost:2379", "", time.Second*5)
 	client, err := NewClient("zookeeper", "localhost:2181", "", time.Second*5)
 	if err != nil {
 		panic(err)
@@ -20,18 +22,23 @@ func getStore() *Store {
 	return store
 }
 
+func TestProductDir(t *testing.T) {
+	dir := ProductDir(productName)
+	assert.Equal(t, dir, strings.Join([]string{BaseDir, productName}, "/"))
+}
+
 func TestSlotSetGet(t *testing.T) {
 	slot := &Slot{
 		ProductName: productName,
 		Id:          1000,
 		GroupId:     1,
-		State:       SlotState{
-			Status:        SLOT_STATUS_ONLINE,
+		State: SlotState{
+			Status: SLOT_STATUS_ONLINE,
 			MigrateStatus: SlotMigrateStatus{
 				From: INVALID_ID,
 				To:   INVALID_ID,
 			},
-			LastOpTs:      "0",
+			LastOpTs: "0",
 		},
 	}
 	s := getStore()
@@ -63,8 +70,8 @@ func TestAction(t *testing.T) {
 			}
 			go func() {
 				action := &Action{
-					Type:   ACTION_TYPE_MULTI_SLOT_CHANGED,
-					Desc:   "desc",
+					Type: ACTION_TYPE_MULTI_SLOT_CHANGED,
+					Desc: "desc",
 				}
 				_, err := s.CreateActoinInOrderer(action)
 				if err != nil {

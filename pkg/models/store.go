@@ -7,78 +7,71 @@ package models
 import (
 	"encoding/json"
 	"fmt"
-	"log"
-	"path/filepath"
+	"path"
 	"regexp"
 
 	"github.com/CodisLabs/codis/pkg/utils/errors"
 	"github.com/IceFireDB/kit/pkg/models/client"
 )
 
-func init() {
-	if filepath.Separator != '/' {
-		log.Panicf("bad Separator = '%c', must be '/'", filepath.Separator)
-	}
-}
-
 const BaseDir = "/icefire"
 
 var ErrGroupMasterNotFound = errors.New("group master not found")
 
 func ProductDir(product string) string {
-	return filepath.Join(BaseDir, product)
+	return path.Join(BaseDir, product)
 }
 
 func GetWatchActionDir(product string) string {
-	return filepath.Join(BaseDir, product, "actions")
+	return path.Join(BaseDir, product, "actions")
 }
 
 func ActionPath(product string, seq string) string {
-	return filepath.Join(BaseDir, product, "actions", seq)
+	return path.Join(BaseDir, product, "actions", seq)
 }
 
 func LockPath(product string) string {
-	return filepath.Join(BaseDir, product, "pd")
+	return path.Join(BaseDir, product, "pd")
 }
 
 func CliDir(product string) string {
-	return filepath.Join(BaseDir, product, "living-cli-config")
+	return path.Join(BaseDir, product, "living-cli-config")
 }
 
 func CliPath(product string, name string) string {
-	return filepath.Join(BaseDir, product, "living-cli-config", name)
+	return path.Join(BaseDir, product, "living-cli-config", name)
 }
 
 func ProxyDir(product string) string {
-	return filepath.Join(BaseDir, product, "proxy")
+	return path.Join(BaseDir, product, "proxy")
 }
 
 func ProxyPath(product string, id string) string {
-	return filepath.Join(BaseDir, product, "proxy", id)
+	return path.Join(BaseDir, product, "proxy", id)
 }
 
 func SlotDir(product string) string {
-	return filepath.Join(BaseDir, product, "slots")
+	return path.Join(BaseDir, product, "slots")
 }
 
 func SlotPath(product string, sid int) string {
-	return filepath.Join(BaseDir, product, "slots", fmt.Sprintf("slot-%04d", sid))
+	return path.Join(BaseDir, product, "slots", fmt.Sprintf("slot-%04d", sid))
 }
 
 func GroupDir(product string) string {
-	return filepath.Join(BaseDir, product, "group")
+	return path.Join(BaseDir, product, "group")
 }
 
 func ServerDir(product string) string {
-	return filepath.Join(BaseDir, product, "server")
+	return path.Join(BaseDir, product, "server")
 }
 
 func GroupPath(product string, gid int) string {
-	return filepath.Join(BaseDir, product, "group", fmt.Sprintf("group-%04d", gid))
+	return path.Join(BaseDir, product, "group", fmt.Sprintf("group-%04d", gid))
 }
 
 func ServerPath(product string, addr string) string {
-	return filepath.Join(BaseDir, product, "server", fmt.Sprintf("server-%s", addr))
+	return path.Join(BaseDir, product, "server", fmt.Sprintf("server-%s", addr))
 }
 
 func LoadTopom(client client.Client, product string, must bool) (*Topom, error) {
