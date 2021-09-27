@@ -14,8 +14,8 @@ import (
 
 	"github.com/ngaut/zkhelper"
 
+	log "github.com/IceFireDB/kit/pkg/logger"
 	"github.com/juju/errors"
-	log "github.com/ngaut/logging"
 )
 
 type ActionType string
@@ -61,7 +61,7 @@ func (s *Store) GetActionWithSeq(seq string) (*Action, error) {
 }
 
 func (s *Store) GetActionObject(seq string, act interface{}) error {
-	data, err :=  s.client.Read(s.ActionPath(seq), true)
+	data, err := s.client.Read(s.ActionPath(seq), true)
 	if err != nil {
 		return errors.Trace(err)
 	}
@@ -138,7 +138,7 @@ func ExtraSeqList(nodes []string) ([]string, error) {
 	var seqs []string
 	for _, nodeName := range nodes {
 		paths := strings.Split(nodeName, "/")
-		seq := paths[len(paths) - 1]
+		seq := paths[len(paths)-1]
 		seqs = append(seqs, seq)
 	}
 

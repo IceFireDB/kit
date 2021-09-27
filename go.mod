@@ -16,6 +16,7 @@ require (
 	github.com/pingcap/check v0.0.0-20200212061837-5e12011dc712 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/samuel/go-zookeeper v0.0.0-20201211165307-7117e9ea2414
+	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/stretchr/testify v1.7.0
 	go.etcd.io/etcd/client/v2 v2.305.0
 	golang.org/x/net v0.0.0-20210913180222-943fd674d43e
