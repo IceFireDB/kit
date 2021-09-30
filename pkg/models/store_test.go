@@ -13,8 +13,8 @@ import (
 const productName = "productNameForTest"
 
 func getStore() *Store {
-	// client, err := NewClient("etcd", "localhost:2379", "", time.Second*5)
-	client, err := NewClient("zookeeper", "localhost:2181", "", time.Second*5)
+	client, err := NewClient("etcd", "47.117.125.229:2379", "", time.Second*5)
+	// client, err := NewClient("zookeeper", "localhost:2181", "", time.Second*5)
 	if err != nil {
 		panic(err)
 	}

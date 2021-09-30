@@ -15,16 +15,14 @@ const (
 	EventNotWatching = EventType(-2)
 )
 
-var (
-	eventNames = map[EventType]string{
-		EventNodeCreated:         "EventNodeCreated",
-		EventNodeDeleted:         "EventNodeDeleted",
-		EventNodeDataChanged:     "EventNodeDataChanged",
-		EventNodeChildrenChanged: "EventNodeChildrenChanged",
-		EventSession:             "EventSession",
-		EventNotWatching:         "EventNotWatching",
-	}
-)
+var eventNames = map[EventType]string{
+	EventNodeCreated:         "EventNodeCreated",
+	EventNodeDeleted:         "EventNodeDeleted",
+	EventNodeDataChanged:     "EventNodeDataChanged",
+	EventNodeChildrenChanged: "EventNodeChildrenChanged",
+	EventSession:             "EventSession",
+	EventNotWatching:         "EventNotWatching",
+}
 
 type EventType int32
 
@@ -46,13 +44,9 @@ type Client interface {
 	Delete(path string) error
 
 	Read(path string, must bool) ([]byte, error)
-	//ReadInorderItem(dir string, seq string, must bool) ([]byte, error)
 	List(path string, must bool) ([]string, error)
 
 	Close() error
 
 	WatchInOrder(path string) (<-chan Event, []string, error)
-
-	CreateEphemeral(path string, data []byte) (<-chan struct{}, error)
-	CreateEphemeralInOrder(path string, data []byte) (<-chan struct{}, string, error)
 }

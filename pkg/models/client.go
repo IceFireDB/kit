@@ -6,20 +6,21 @@ package models
 import (
 	"time"
 
-	etcdclient "github.com/IceFireDB/kit/pkg/models/client/etcd"
-	zkclient "github.com/IceFireDB/kit/pkg/models/client/zk"
 	"github.com/IceFireDB/kit/pkg/models/client"
+	"github.com/IceFireDB/kit/pkg/models/client/etcd"
+	etcdclient "github.com/IceFireDB/kit/pkg/models/client/etcdv2"
+	zkclient "github.com/IceFireDB/kit/pkg/models/client/zk"
 	"github.com/pkg/errors"
 )
-
-
 
 func NewClient(coordinator string, addrlist string, auth string, timeout time.Duration) (client.Client, error) {
 	switch coordinator {
 	case "zk", "zookeeper":
 		return zkclient.New(addrlist, auth, timeout)
-	case "etcd":
+	case "etcdv2":
 		return etcdclient.New(addrlist, auth, timeout)
+	case "etcd":
+		return etcd.New(addrlist, auth, timeout)
 	}
 	return nil, errors.Errorf("invalid coordinator name = %s", coordinator)
 }
